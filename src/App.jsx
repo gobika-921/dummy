@@ -10,6 +10,7 @@ const buttons = [
 function App() {
   const [expression, setExpression] = useState('');
   const [result, setResult] = useState('0');
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const append = (value) => {
     if (value === '=' ) {
@@ -44,38 +45,54 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex items-center justify-center px-4 py-10">
-      <div className="w-full max-w-md rounded-3xl border border-slate-700 bg-slate-900/90 p-6 shadow-2xl shadow-slate-950/40">
-        <div className="mb-6 rounded-3xl bg-slate-800 p-5 text-right text-slate-100 shadow-inner shadow-slate-950/30">
-          <div className="text-sm text-slate-400">Calculator</div>
-          <div className="mt-3 min-h-[3rem] break-words text-3xl font-semibold">{expression || '0'}</div>
-          <div className="mt-2 text-right text-slate-400">= {result}</div>
+    <div className={`min-h-screen ${isDarkMode ? 'bg-slate-950' : 'bg-slate-50'} flex items-center justify-center px-4 py-10`}>
+      <div className={`w-full max-w-md rounded-3xl border ${isDarkMode ? 'border-slate-700 bg-slate-900/90' : 'border-slate-300 bg-white/90'} p-6 shadow-2xl ${isDarkMode ? 'shadow-slate-950/40' : 'shadow-slate-200/40'}`}>
+        <div className="flex justify-end gap-2 mb-4">
+          <button
+            type="button"
+            className={`rounded-full p-2 text-xl transition ${isDarkMode ? 'text-slate-100 hover:bg-white/10' : 'text-slate-900 hover:bg-black/10'}`}
+            onClick={() => setIsDarkMode(false)}
+          >
+            ☀️
+          </button>
+          <button
+            type="button"
+            className={`rounded-full p-2 text-xl transition ${isDarkMode ? 'text-slate-100 hover:bg-white/10' : 'text-slate-900 hover:bg-black/10'}`}
+            onClick={() => setIsDarkMode(true)}
+          >
+            🌙
+          </button>
+        </div>
+        <div className={`mb-6 rounded-3xl ${isDarkMode ? 'bg-slate-800' : 'bg-slate-100'} p-5 text-right ${isDarkMode ? 'text-slate-100' : 'text-slate-900'} shadow-inner ${isDarkMode ? 'shadow-slate-950/30' : 'shadow-slate-200/30'}`}>
+          <div className={`text-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>Calculator</div>
+          <div className={`mt-3 min-h-[3rem] break-words text-3xl font-semibold ${isDarkMode ? '' : 'text-slate-900'}`}>{expression || '0'}</div>
+          <div className={`mt-2 text-right ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}> = {result}</div>
         </div>
         <div className="grid gap-3 sm:grid-cols-4">
           <button
             type="button"
-            className="rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 py-4 text-lg font-semibold text-slate-100 transition hover:bg-white/10 active:bg-white/15 shadow-lg"
+            className={`rounded-2xl ${isDarkMode ? 'bg-white/10 backdrop-blur-sm border border-white/20 text-slate-100 hover:bg-white/20 active:bg-white/25' : 'bg-black/10 backdrop-blur-sm border border-black/20 text-slate-900 hover:bg-black/20 active:bg-black/25'} py-4 text-lg font-semibold transition shadow-lg`}
             onClick={clear}
           >
             AC
           </button>
           <button
             type="button"
-            className="rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 py-4 text-lg font-semibold text-slate-100 transition hover:bg-white/10 active:bg-white/15 shadow-lg"
+            className={`rounded-2xl ${isDarkMode ? 'bg-white/10 backdrop-blur-sm border border-white/20 text-slate-100 hover:bg-white/20 active:bg-white/25' : 'bg-black/10 backdrop-blur-sm border border-black/20 text-slate-900 hover:bg-black/20 active:bg-black/25'} py-4 text-lg font-semibold transition shadow-lg`}
             onClick={removeLast}
           >
             ⌫
           </button>
           <button
             type="button"
-            className="rounded-2xl bg-orange-500/40 backdrop-blur-sm border border-orange-400/20 py-4 text-lg font-semibold text-white transition hover:bg-orange-500/60 active:bg-orange-500/70 shadow-lg"
+            className="rounded-2xl bg-orange-500/50 backdrop-blur-sm border border-orange-400/30 py-4 text-lg font-semibold text-white transition hover:bg-orange-500/70 active:bg-orange-500/80 shadow-lg"
             onClick={() => append('(')}
           >
             (
           </button>
           <button
             type="button"
-            className="rounded-2xl bg-orange-500/40 backdrop-blur-sm border border-orange-400/20 py-4 text-lg font-semibold text-white transition hover:bg-orange-500/60 active:bg-orange-500/70 shadow-lg"
+            className="rounded-2xl bg-orange-500/50 backdrop-blur-sm border border-orange-400/30 py-4 text-lg font-semibold text-white transition hover:bg-orange-500/70 active:bg-orange-500/80 shadow-lg"
             onClick={() => append(')')}
           >
             )
@@ -86,10 +103,12 @@ function App() {
               type="button"
               className={`rounded-2xl py-4 text-xl font-semibold transition shadow-lg ${
                 value === '='
-                  ? 'bg-cyan-500/40 backdrop-blur-sm border border-cyan-400/20 text-slate-950 hover:bg-cyan-500/60 active:bg-cyan-500/70'
+                  ? 'bg-cyan-500/50 backdrop-blur-sm border border-cyan-400/30 text-slate-950 hover:bg-cyan-500/70 active:bg-cyan-500/80'
                   : /[/*\-+]/.test(value)
-                  ? 'bg-orange-500/40 backdrop-blur-sm border border-orange-400/20 text-white hover:bg-orange-500/60 active:bg-orange-500/70'
-                  : 'bg-white/5 backdrop-blur-sm border border-white/10 text-slate-100 hover:bg-white/10 active:bg-white/15'
+                  ? 'bg-orange-500/50 backdrop-blur-sm border border-orange-400/30 text-white hover:bg-orange-500/70 active:bg-orange-500/80'
+                  : isDarkMode
+                  ? 'bg-white/10 backdrop-blur-sm border border-white/20 text-slate-100 hover:bg-white/20 active:bg-white/25'
+                  : 'bg-black/10 backdrop-blur-sm border border-black/20 text-slate-900 hover:bg-black/20 active:bg-black/25'
               }`}
               onClick={() => append(value)}
             >
