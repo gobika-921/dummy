@@ -54,28 +54,28 @@ function App() {
         <div className="grid gap-3 sm:grid-cols-4">
           <button
             type="button"
-            className="rounded-2xl bg-slate-700 py-4 text-lg font-semibold text-slate-100 transition hover:bg-slate-600"
+            className="rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 py-4 text-lg font-semibold text-slate-100 transition hover:bg-white/10 active:bg-white/15 shadow-lg"
             onClick={clear}
           >
             AC
           </button>
           <button
             type="button"
-            className="rounded-2xl bg-slate-700 py-4 text-lg font-semibold text-slate-100 transition hover:bg-slate-600"
+            className="rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 py-4 text-lg font-semibold text-slate-100 transition hover:bg-white/10 active:bg-white/15 shadow-lg"
             onClick={removeLast}
           >
-            DEL
+            ⌫
           </button>
           <button
             type="button"
-            className="rounded-2xl bg-slate-700 py-4 text-lg font-semibold text-slate-100 transition hover:bg-slate-600"
+            className="rounded-2xl bg-orange-500/40 backdrop-blur-sm border border-orange-400/20 py-4 text-lg font-semibold text-white transition hover:bg-orange-500/60 active:bg-orange-500/70 shadow-lg"
             onClick={() => append('(')}
           >
             (
           </button>
           <button
             type="button"
-            className="rounded-2xl bg-orange-500 py-4 text-lg font-semibold text-white transition hover:bg-orange-400"
+            className="rounded-2xl bg-orange-500/40 backdrop-blur-sm border border-orange-400/20 py-4 text-lg font-semibold text-white transition hover:bg-orange-500/60 active:bg-orange-500/70 shadow-lg"
             onClick={() => append(')')}
           >
             )
@@ -84,10 +84,16 @@ function App() {
             <button
               key={value}
               type="button"
-              className={`rounded-2xl py-4 text-xl font-semibold transition ${value === '=' ? 'bg-cyan-500 text-slate-950 hover:bg-cyan-400' : /[/*\-+]/.test(value) ? 'bg-orange-500 text-white hover:bg-orange-400' : 'bg-slate-700 text-slate-100 hover:bg-slate-600'}`}
+              className={`rounded-2xl py-4 text-xl font-semibold transition shadow-lg ${
+                value === '='
+                  ? 'bg-cyan-500/40 backdrop-blur-sm border border-cyan-400/20 text-slate-950 hover:bg-cyan-500/60 active:bg-cyan-500/70'
+                  : /[/*\-+]/.test(value)
+                  ? 'bg-orange-500/40 backdrop-blur-sm border border-orange-400/20 text-white hover:bg-orange-500/60 active:bg-orange-500/70'
+                  : 'bg-white/5 backdrop-blur-sm border border-white/10 text-slate-100 hover:bg-white/10 active:bg-white/15'
+              }`}
               onClick={() => append(value)}
             >
-              {value}
+              {value === '*' ? '×' : value === '/' ? '÷' : value === '-' ? '−' : value}
             </button>
           ))}
         </div>
